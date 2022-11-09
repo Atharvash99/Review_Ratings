@@ -1,6 +1,17 @@
 const bcrypt = require("bcrypt");
 const User = require("../model/userSchema");
 const userSchema = require('../model/userSchema');
+const{transporter,mailOptions} = require("../service/mailService")
+
+const sendMail = async(req,res)=>{
+    transporter.sendMail(mailOptions,(error,info)=>{
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Email sent succesfully" +info.response);
+        }
+    })
+}
 
 const userSignup = async(req,res) => {
     let email=req.body.email;   
@@ -42,5 +53,6 @@ const userSignup = async(req,res) => {
 }
 
 module.exports = {
-    userSignup
+    userSignup,
+    sendMail
 };
